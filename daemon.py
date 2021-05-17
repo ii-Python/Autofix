@@ -32,6 +32,7 @@ def drive_attached(drive):
     # Scan for an autorun.inf file
     autorun = os.path.join(drive, "autorun.inf")
     if not os.path.exists(autorun):
+        print("No autorun file found in {}".format(drive))
         return
 
     # Read from it
@@ -40,6 +41,7 @@ def drive_attached(drive):
             data = file.read()
 
     except (PermissionError, UnicodeDecodeError):
+        print("Failed to read autorun file in {}".format(drive))
         return
 
     # Try to load it
@@ -50,20 +52,30 @@ def drive_attached(drive):
 
     if file is not None:
 
-        # Move to drive
+        # Move to root
         try:
-            os.chdir(drive)
+            root = "".join(_ + "/" for _ in os.path.join(drive, file).replace("\\", "/").split("/")[:-1])[:-1]
+            os.chdir(root)
 
         except Exception as error:
-            return print("Failed moving to drive: " + str(error))
+            return print("Failed moving to root: " + str(error))
 
         # Launch the given file
+        file = os.path.join(drive, file)
+
+        file = file.replace(root, "")
+        if file[0] == "/":
+            file = file[1:]
+
         if not os.path.exists(file):
             return print("autorun.inf ({}): path '{}' not found".format(drive, file))
 
         else:
             try:
                 os.startfile(file)
+
+            except FileNotFoundError:
+                return print("autorun.inf ({}): path '{}' not found".format(drive, file))
 
             except OSError:
                 pass  # Canceled by user
