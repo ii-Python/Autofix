@@ -1,0 +1,8 @@
+# Hide cache files
+__pycache__/
+*.pyc
+
+# Hide EXE build files
+dist/
+build/
+*.spec
