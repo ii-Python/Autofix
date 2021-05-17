@@ -6,11 +6,16 @@ Autofix, a background script to automatically execute `autorun.inf` files on dri
 
 ## Installation
 ---
+
+Download the prebuilt `Autofix.exe` from the releases page.
+Otherwise, run via Python:
 ```
 git clone https://github.com/ii-Python/Autofix
 cd Autofix
-cp daemon.py daemon.pyw
 python3 -m pip install -r deps.txt
 ```
 
-To start the process, simply run the pyw file. It is recommended that you add it as a startup program.
+## Running
+---
+To start Autofix, run the exe file (if you downloaded it), otherwise, run the .pyw file.
+It is recommended that you add it as a startup program.
