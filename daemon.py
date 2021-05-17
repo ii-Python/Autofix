@@ -2,6 +2,7 @@
 
 # Modules
 import os
+import sys
 import psutil
 from time import sleep
 from internals.parser import Parser
@@ -15,6 +16,9 @@ __copyright__ = "Copyright 2021; iiPython"
 
 # Initialization
 DRIVES = []  # Prevent an additional call to locate_drives()
+if os.name != "nt":
+    print("Autofix is for windows only.")
+    sys.exit(-1)
 
 # Handle drives
 def drive_attached(drive):
